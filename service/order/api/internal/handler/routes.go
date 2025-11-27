@@ -8,7 +8,9 @@ import (
 
 	"github.com/zeromicro/go-zero/rest"
 )
-
+/**
+	核心功能是将具体的 URL 路径（API 端点）与相应的处理函数关联起来，并统一注册到 HTTP 服务器中。所有这些路由都受到 JWT 认证的保护
+ */
 func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
@@ -38,6 +40,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: ListHandler(serverCtx),
 			},
 		},
+		// 这组路由统一加上了 JWT 认证中间件
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 	)
 }
